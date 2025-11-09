@@ -16,7 +16,7 @@ function divide(a, b) {
 
 const operand1 = 0;
 const operand2 = 0;
-const operator = "+";
+const operator = add;
 
 function operate(operand1 = 0, operand2 = 0, operator = add) {
     console.log(operator(operand1, operand2));
