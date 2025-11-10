@@ -46,6 +46,8 @@ class Calculator {
 
         if (this.x && !this.op) {
             this.op = btnText;
+        } else if (this.x && this.op && !this.y) {
+            this.op = btnText;
         } else if (this.x && this.op && this.y) {
             this.operate();
             this.op = btnText;
