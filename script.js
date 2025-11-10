@@ -1,10 +1,10 @@
 class Calculator {
     
     constructor(initVal = 0) {
-        this.firstOperand = null;
-        this.secondOperand = null;
-        this.operator = null;
-        this.replaceFirstOperand = false;
+        this.x = null;
+        this.y = null;
+        this.op = null;
+        this.replaceX = false;
 
         this.display = document.querySelector(".display p");
         this.setDisplay(initVal);
@@ -22,92 +22,92 @@ class Calculator {
                 this.handleOperator(e);
             }
 
-            console.log({x: this.firstOperand, op: this.operator, y: this.secondOperand, replace: this.replaceFirstOperand});
+            console.log({x: this.x, op: this.op, y: this.y, replace: this.replaceX});
         });
     }
 
     handleDigit(e) {
         const btnText = e.target.innerText;
 
-        if (!this.firstOperand) {
-            this.firstOperand = btnText;
-            this.setDisplay(this.firstOperand);
-        } else if (this.firstOperand && this.replaceFirstOperand) {
-            this.firstOperand = btnText;
-            this.replaceFirstOperand = false;
-            this.setDisplay(this.firstOperand);
-        } else if (this.firstOperand && !this.operator && !this.secondOperand) {
-            this.firstOperand += btnText;
-            this.setDisplay(this.firstOperand);
-        } else if (this.firstOperand && this.operator && !this.secondOperand) {
-            this.secondOperand = btnText;
-            this.setDisplay(this.secondOperand);
+        if (!this.x) {
+            this.x = btnText;
+            this.setDisplay(this.x);
+        } else if (this.x && this.replaceX) {
+            this.x = btnText;
+            this.replaceX = false;
+            this.setDisplay(this.x);
+        } else if (this.x && !this.op && !this.y) {
+            this.x += btnText;
+            this.setDisplay(this.x);
+        } else if (this.x && this.op && !this.y) {
+            this.y = btnText;
+            this.setDisplay(this.y);
         } else {
-            this.secondOperand += btnText;
-            this.setDisplay(this.secondOperand);
+            this.y += btnText;
+            this.setDisplay(this.y);
         }
     }
 
     handleOperator(e) {
         const btnText = e.target.innerText;
 
-        if (this.firstOperand && !this.operator) {
-            this.operator = btnText;
-        } else if (this.firstOperand && this.operator && this.secondOperand) {
+        if (this.x && !this.op) {
+            this.op = btnText;
+        } else if (this.x && this.op && this.y) {
             this.operate();
-            this.operator = btnText;
+            this.op = btnText;
         }
 
-        this.replaceFirstOperand = false;
+        this.replaceX = false;
     }
 
     operate() {
-        if (!this.firstOperand || !this.operator || !this.secondOperand) {
+        if (!(this.x && this.op  && this.y)) {
             return;
         }
 
         let res;
-        switch (this.operator) {
+        switch (this.op) {
             case "+":
-                res = this.add(this.firstOperand, this.secondOperand);
+                res = this.add();
                 break;
             case "−":
-                res = this.substract(this.firstOperand, this.secondOperand);
+                res = this.substract();
                 break;
             case "×":
-                res = this.multiply(this.firstOperand, this.secondOperand);
+                res = this.multiply();
                 break;
             case "÷":
-                res = this.divide(this.firstOperand, this.secondOperand);
+                res = this.divide();
                 break;
         }
     
         this.reset();
-        this.replaceFirstOperand = true;
-        this.firstOperand = `${res}`;
-        this.setDisplay(this.firstOperand);
+        this.replaceX = true;
+        this.x = `${res}`;
+        this.setDisplay(this.x);
     }
 
-    add(x, y) {
-        return Number(x) + Number(y);
+    add() {
+        return Number(this.x) + Number(this.y);
     }
 
-    substract(x, y) {
-        return Number(x) - Number(y);
+    substract() {
+        return Number(this.x) - Number(this.y);
     }
 
-    multiply(x, y) {
-        return Number(x) * Number(y);
+    multiply() {
+        return Number(this.x) * Number(this.y);
     }
 
-    divide(x, y) {
-        return Number(x) / Number(y);
+    divide() {
+        return Number(this.x) / Number(this.y);
     }
 
     reset() {
-        this.firstOperand = null;
-        this.secondOperand = null;
-        this.operator = null;
+        this.x = null;
+        this.y = null;
+        this.op = null;
         this.setDisplay(0);
     }
 
