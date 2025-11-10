@@ -31,18 +31,21 @@ class Calculator {
 
         if (!this.firstOperand) {
             this.firstOperand = btnText;
+            this.setDisplay(this.firstOperand);
         } else if (this.firstOperand && this.replaceFirstOperand) {
             this.firstOperand = btnText;
             this.replaceFirstOperand = false;
+            this.setDisplay(this.firstOperand);
         } else if (this.firstOperand && !this.operator && !this.secondOperand) {
             this.firstOperand += btnText;
+            this.setDisplay(this.firstOperand);
         } else if (this.firstOperand && this.operator && !this.secondOperand) {
             this.secondOperand = btnText;
+            this.setDisplay(this.secondOperand);
         } else {
             this.secondOperand += btnText;
+            this.setDisplay(this.secondOperand);
         }
-
-        this.updateDisplay();
     }
 
     handleOperator(e) {
@@ -50,13 +53,19 @@ class Calculator {
 
         if (this.firstOperand && !this.operator) {
             this.operator = btnText;
+        } else if (this.firstOperand && this.operator && this.secondOperand) {
+            this.operate();
+            this.operator = btnText;
         }
 
         this.replaceFirstOperand = false;
-        this.updateDisplay();
     }
 
     operate() {
+        if (!this.firstOperand || !this.operator || !this.secondOperand) {
+            return;
+        }
+
         let res;
         switch (this.operator) {
             case "+":
@@ -74,9 +83,9 @@ class Calculator {
         }
     
         this.reset();
-        this.firstOperand = `${res}`;
         this.replaceFirstOperand = true;
-        this.updateDisplay();
+        this.firstOperand = `${res}`;
+        this.setDisplay(this.firstOperand);
     }
 
     add(x, y) {
@@ -100,13 +109,6 @@ class Calculator {
         this.secondOperand = null;
         this.operator = null;
         this.setDisplay(0);
-    }
-
-    updateDisplay() {
-        const op1 = this.firstOperand ? this.firstOperand : "";
-        const op2 = this.secondOperand ? this.secondOperand : "";
-        const op = this.operator ? this.operator : "";
-        this.setDisplay(op1 + op + op2);
     }
 
     setDisplay(str) {
