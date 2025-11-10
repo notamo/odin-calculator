@@ -2,12 +2,10 @@ class Calculator {
     
     constructor(initVal = 0) {
         this.display = document.querySelector(".display p");
-        this.keypad = document.querySelector(".keypad");
+        this.reset(initVal);
         
-        this.reset(initVal)
-        
-        this.keypad.addEventListener("click", (e) => {
-
+        const keypad = document.querySelector(".keypad");
+        keypad.addEventListener("click", (e) => {
             if (e.target.id === "ac") {
                 this.reset();
             } else if (e.target.id === "result") {
@@ -17,14 +15,13 @@ class Calculator {
             } else if (e.target.className === "operator") {
                 this.handleOperator(e);
             }
-
             console.log({x: this.x, op: this.op, y: this.y, replace: this.replaceX});
         });
     }
 
     handleDigit(e) {
         const btnText = e.target.innerText;
-
+        
         if (!this.x) {
             this.x = btnText;
             this.setDisplay(this.x);
