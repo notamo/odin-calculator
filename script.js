@@ -1,15 +1,11 @@
 class Calculator {
     
     constructor(initVal = 0) {
-        this.x = null;
-        this.y = null;
-        this.op = null;
-        this.replaceX = false;
-
         this.display = document.querySelector(".display p");
-        this.setDisplay(initVal);
-
         this.keypad = document.querySelector(".keypad");
+        
+        this.reset(initVal)
+        
         this.keypad.addEventListener("click", (e) => {
 
             if (e.target.id === "ac") {
@@ -104,11 +100,12 @@ class Calculator {
         return Number(this.x) / Number(this.y);
     }
 
-    reset() {
+    reset(str = 0) {
         this.x = null;
         this.y = null;
         this.op = null;
-        this.setDisplay(0);
+        this.replaceX = false;
+        this.setDisplay(str);
     }
 
     setDisplay(str) {
