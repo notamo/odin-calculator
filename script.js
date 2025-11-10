@@ -21,7 +21,7 @@ class Calculator {
 
     handleDigit(e) {
         const btnText = e.target.innerText;
-        
+
         if (!this.x) {
             this.x = btnText;
             this.setDisplay(this.x);
@@ -105,8 +105,11 @@ class Calculator {
         this.setDisplay(str);
     }
 
-    setDisplay(str) {
-        this.display.textContent = `${str}`;
+    setDisplay(input) {
+        if (!Number.isInteger(Number(input))) {
+            input = Number.parseFloat(input).toFixed(2);
+        }
+        this.display.textContent = `${input}`;
     }
 }
 
