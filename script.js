@@ -15,7 +15,7 @@ class Calculator {
             } else if (e.target.className === "operator") {
                 this.handleOperator(e);
             }
-            console.log({x: this.x, op: this.op, y: this.y, replace: this.replaceX});
+            console.log({x: this.x, op: this.op, y: this.y, clearResult: this.replaceX});
         });
     }
 
